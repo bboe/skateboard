@@ -150,17 +150,13 @@ window.addEventListener('keydown', (e) => {
     if (e.key === ' ' || e.key.startsWith('Arrow')) e.preventDefault();
 });
 
-window.addEventListener('mousedown', (e) => {
+// Pointer events unify mouse, touch, and pen across all modern browsers
+// (incl. iOS Safari 13+). Attached to the canvas (not window) because
+// window-level touch listeners are unreliable on iOS.
+canvas.addEventListener('pointerdown', (e) => {
     tryAction();
     e.preventDefault();
 });
-
-// Mobile: treat a touch as a tap. preventDefault suppresses the synthesized
-// mouse events (so we don't double-fire) and stops pull-to-refresh / zoom.
-window.addEventListener('touchstart', (e) => {
-    tryAction();
-    e.preventDefault();
-}, { passive: false });
 
 function update() {
     if (gameState !== STATE_PLAYING) return;
