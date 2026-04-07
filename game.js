@@ -418,11 +418,29 @@ function render() {
     drawUI();
 }
 
-function loop() {
-    update();
+// Fixed-timestep loop: physics always runs at 60 Hz regardless of the
+// device's render rate, so the game plays at the same speed on devices
+// animating at 30 / 60 / 120+ FPS. The accumulator catches up by running
+// extra steps on slow frames; MAX_FRAME_MS caps catch-up after a tab
+// pause so we don't spiral.
+const STEP_MS = 1000 / 60;
+const MAX_FRAME_MS = 250;
+let lastTime = 0;
+let accumulator = 0;
+
+function loop(now) {
+    if (lastTime === 0) lastTime = now;
+    let frameMs = now - lastTime;
+    lastTime = now;
+    if (frameMs > MAX_FRAME_MS) frameMs = MAX_FRAME_MS;
+    accumulator += frameMs;
+    while (accumulator >= STEP_MS) {
+        update();
+        accumulator -= STEP_MS;
+    }
     render();
     requestAnimationFrame(loop);
 }
 
 resetGame();
-loop();
+requestAnimationFrame(loop);
