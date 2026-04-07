@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skate</title>
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: -apple-system, sans-serif;
+        }
+        canvas {
+            display: block;
+            border: 2px solid #fff;
+            image-rendering: pixelated;
+        }
+        #hint {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            color: #fff;
+            font-size: 13px;
+            opacity: 0.8;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="hint">Press any key or click to start &middot; jump</div>
+    <canvas id="game" width="800" height="450"></canvas>
+    <script src="game.js"></script>
+</body>
+</html>
