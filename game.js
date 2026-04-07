@@ -5,13 +5,17 @@ const H = canvas.height;
 
 // World
 const GROUND_Y = H - 70;
-const GRAVITY = 0.6;
+// Overall game-speed multiplier. Velocities scale linearly, gravity scales
+// quadratically — that combination preserves the jump arc (apex height
+// and horizontal distance per jump) while making time pass faster.
+const TIME_SCALE = 1.5;
+const GRAVITY = 0.6 * TIME_SCALE * TIME_SCALE;
 
 // Player tuning
 const ACCEL = 0.4;
 const FRICTION = 0.93;
 const MAX_SPEED = 7;
-const JUMP_POWER = 12;
+const JUMP_POWER = 12 * TIME_SCALE;
 
 const player = {
     x: W / 2,
@@ -26,7 +30,7 @@ let cameraX = 0;
 
 // Auto-runner config
 const PLAYER_X = Math.round(W * 0.2);    // fixed screen x for the player
-const AUTO_SPEED = 5.5;                  // constant horizontal velocity while playing
+const AUTO_SPEED = 5.5 * TIME_SCALE;     // constant horizontal velocity while playing
 
 // Game states
 const STATE_READY = 'ready';
