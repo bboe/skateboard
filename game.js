@@ -155,6 +155,13 @@ window.addEventListener('mousedown', (e) => {
     e.preventDefault();
 });
 
+// Mobile: treat a touch as a tap. preventDefault suppresses the synthesized
+// mouse events (so we don't double-fire) and stops pull-to-refresh / zoom.
+window.addEventListener('touchstart', (e) => {
+    tryAction();
+    e.preventDefault();
+}, { passive: false });
+
 function update() {
     if (gameState !== STATE_PLAYING) return;
 
